@@ -76,7 +76,19 @@ async def parere(ctx, nick: str = None):
 import os
 
 print("🔍 Checking if TOKEN is loaded from Koyeb Secrets...")
-TOKEN = os.getenv("TOKEN")
+import os
+
+TOKEN = os.environ.get("TOKEN")
+
+if not TOKEN:
+    print("❌ ERROR: TOKEN is still not set. Trying an alternative method...")
+    from dotenv import load_dotenv
+    load_dotenv()
+    TOKEN = os.getenv("TOKEN")
+
+if not TOKEN:
+    raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
+
 
 if not TOKEN:
     print("❌ ERROR: TOKEN is not set! Make sure it's added in Koyeb Secrets.")
