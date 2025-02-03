@@ -73,5 +73,14 @@ async def parere(ctx, nick: str = None):
         await ctx.send("⚠️ Nu am permisiunea să adaug reacții!", delete_after=5)
 
 # Run the bot
+import os
+
+print("🔍 Checking if TOKEN is loaded from Koyeb Secrets...")
 TOKEN = os.getenv("TOKEN")
+
+if not TOKEN:
+    print("❌ ERROR: TOKEN is not set! Make sure it's added in Koyeb Secrets.")
+else:
+    print(f"✅ TOKEN is loaded successfully! Length: {len(TOKEN)} characters")
+
 bot.run(TOKEN)
