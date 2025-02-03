@@ -9,7 +9,8 @@ intents = discord.Intents.default()
 intents.message_content = True  # Allow bot to read messages
 
 # Set up the bot
-bot = commands.Bot(command_prefix="!", intents=intents)
+bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)  # Disable default help command
+
 
 # Function to scrape BluePanel data using BeautifulSoup
 def get_player_data(nick):
