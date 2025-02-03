@@ -90,4 +90,23 @@ if not TOKEN:
 
 if not TOKEN:
     raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
+# Run the bot
+if not TOKEN:
+    raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
+
+import discord
+from discord.ext import commands
+
+# Enable necessary intents
+intents = discord.Intents.default()
+intents.message_content = True  # Allow bot to read messages
+
+# Set up the bot
+bot = commands.Bot(command_prefix="!", intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"✅ Logged in as {bot.user}")
+
+bot.run(TOKEN)
 
