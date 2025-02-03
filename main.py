@@ -111,3 +111,6 @@ async def on_ready():
 
 bot.run(TOKEN)
 
+for command in bot.commands:
+    print(f"✅ Loaded command: {command.name}")
+
