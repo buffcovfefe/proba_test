@@ -11,7 +11,6 @@ intents.message_content = True  # Allow bot to read messages
 # Set up the bot
 bot = commands.Bot(command_prefix="!", intents=intents, help_command=None)  # Disable default help command
 
-
 # Function to scrape BluePanel data using BeautifulSoup
 def get_player_data(nick):
     url = f"https://bluepanel.bugged.ro/profile/{nick}"
@@ -19,7 +18,7 @@ def get_player_data(nick):
     # Fake a real browser request
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
-        "Referer": "https://google.com",  # Some sites require a referrer
+        "Referer": "https://google.com",
         "Accept-Language": "en-US,en;q=0.9",
     }
 
@@ -73,44 +72,15 @@ async def parere(ctx, nick: str = None):
     except discord.Forbidden:
         await ctx.send("⚠️ Nu am permisiunea să adaug reacții!", delete_after=5)
 
-# Run the bot
-import os
-
-print("🔍 Checking if TOKEN is loaded from Koyeb Secrets...")
-
-# Try reading from os.environ
-TOKEN = os.getenv("TOKEN")
-
-# Debugging: Print all available environment variables
-print("🔎 Available Environment Variables:")
-print(os.environ)
-
-if not TOKEN:
-    print("❌ ERROR: TOKEN is still not set. Trying an alternative method...")
-    TOKEN = os.environ.get("TOKEN")
-
-if not TOKEN:
-    raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
-# Run the bot
-if not TOKEN:
-    raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
-
-import discord
-from discord.ext import commands
-
-# Enable necessary intents
-intents = discord.Intents.default()
-intents.message_content = True  # Allow bot to read messages
-
-# Set up the bot
-bot = commands.Bot(command_prefix="!", intents=intents)
-
+# Bot Ready Event
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
+    bot.add_command(parere)  # Force-load the command
+
+# Run the bot
+TOKEN = os.getenv("TOKEN")
+if not TOKEN:
+    raise ValueError("❌ TOKEN is missing. Make sure it's set in Koyeb Secrets!")
 
 bot.run(TOKEN)
-
-for command in bot.commands:
-    print(f"✅ Loaded command: {command.name}")
-
